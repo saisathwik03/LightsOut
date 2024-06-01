@@ -16,8 +16,13 @@ def print_grid(board):
         print()
 
 def get_user_input():
-    row = int(input("Enter the row to toggle the light: "))
-    col = int(input("Enter the col to toggle the light: "))
+    row = input("Enter the row 0 to 4/q/r: ")
+    if row.lower()=='q':
+        return 'q','q'
+    if row.lower()=='r':
+        return 'r','r'
+    col = input("Enter the col 0 to 4/q/r: ")
+    
     return row, col
 
 def toggle_light(board, row, col):
@@ -46,10 +51,25 @@ def play_game():
     while True:
         print_grid(board)
         row, col = get_user_input()
+        if row == 'q': 
+            print("Thank you for playing!")
+            return
+        elif row=='r':
+            break
+
+        row = int(row)
+        col = int(col)
         toggle_light(board, row, col)
         if check_win(board):
             print("Congratulations! You've turned off all the lights.")
             print_grid(board)
             break
+        
+    restart = input("Do you want to play again? (yes/no): ").strip().lower()
+    if restart != 'yes':
+        print("Quiting the game!!")
+    else:
+        print("Game will restart now!!")
+        play_game()
 
 play_game()
